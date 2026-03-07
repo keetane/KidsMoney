@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>11</integer>
+	<key>logs</key>
+	<dict>
+		<key>22284215-9DBE-445F-A34F-58FE145FC8DF</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>22284215-9DBE-445F-A34F-58FE145FC8DF.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>1</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Allowance project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Allowance</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project Allowance with scheme Allowance</string>
+			<key>timeStartedRecording</key>
+			<real>794401701.15614104</real>
+			<key>timeStoppedRecording</key>
+			<real>794401708.22943604</real>
+			<key>title</key>
+			<string>Building project Allowance with scheme Allowance</string>
+			<key>uniqueIdentifier</key>
+			<string>22284215-9DBE-445F-A34F-58FE145FC8DF</string>
+		</dict>
+		<key>899211B9-0A78-40D8-8194-390AC66BF4B1</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>899211B9-0A78-40D8-8194-390AC66BF4B1.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Allowance project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Allowance</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project Allowance with scheme Allowance and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>794239208.83271694</real>
+			<key>timeStoppedRecording</key>
+			<real>794239209.41159499</real>
+			<key>title</key>
+			<string>Building project Allowance with scheme Allowance and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>899211B9-0A78-40D8-8194-390AC66BF4B1</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

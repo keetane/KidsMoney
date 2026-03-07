@@ -1,0 +1,109 @@
+{
+  "" : {
+    "diagnostics" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/Allowance-primary.dia",
+    "emit-module-dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/Allowance-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/Allowance-primary-emit-module.dia",
+    "pch" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/Allowance-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/Allowance-primary.swiftdeps"
+  },
+  "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/GeneratedAssetSymbols~partial.swiftmodule"
+  },
+  "/Users/keetane/Documents/apps/allowance/Allowance/AllowanceApp.swift" : {
+    "const-values" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/AllowanceApp.swiftconstvalues",
+    "dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/AllowanceApp.d",
+    "diagnostics" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/AllowanceApp.dia",
+    "index-unit-output-path" : "/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/AllowanceApp.o",
+    "llvm-bc" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/AllowanceApp.bc",
+    "object" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/AllowanceApp.o",
+    "swift-dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/AllowanceApp.swiftdeps",
+    "swiftmodule" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/AllowanceApp~partial.swiftmodule"
+  },
+  "/Users/keetane/Documents/apps/allowance/Allowance/Models/Models.swift" : {
+    "const-values" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/Models.swiftconstvalues",
+    "dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/Models.d",
+    "diagnostics" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/Models.dia",
+    "index-unit-output-path" : "/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/Models.o",
+    "llvm-bc" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/Models.bc",
+    "object" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/Models.o",
+    "swift-dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/Models.swiftdeps",
+    "swiftmodule" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/Models~partial.swiftmodule"
+  },
+  "/Users/keetane/Documents/apps/allowance/Allowance/ViewModels/AllowanceStore.swift" : {
+    "const-values" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/AllowanceStore.swiftconstvalues",
+    "dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/AllowanceStore.d",
+    "diagnostics" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/AllowanceStore.dia",
+    "index-unit-output-path" : "/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/AllowanceStore.o",
+    "llvm-bc" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/AllowanceStore.bc",
+    "object" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/AllowanceStore.o",
+    "swift-dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/AllowanceStore.swiftdeps",
+    "swiftmodule" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/AllowanceStore~partial.swiftmodule"
+  },
+  "/Users/keetane/Documents/apps/allowance/Allowance/Views/ChildSelectionView.swift" : {
+    "const-values" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ChildSelectionView.swiftconstvalues",
+    "dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ChildSelectionView.d",
+    "diagnostics" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ChildSelectionView.dia",
+    "index-unit-output-path" : "/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ChildSelectionView.o",
+    "llvm-bc" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ChildSelectionView.bc",
+    "object" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ChildSelectionView.o",
+    "swift-dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ChildSelectionView.swiftdeps",
+    "swiftmodule" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ChildSelectionView~partial.swiftmodule"
+  },
+  "/Users/keetane/Documents/apps/allowance/Allowance/Views/ChoreManagementView.swift" : {
+    "const-values" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ChoreManagementView.swiftconstvalues",
+    "dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ChoreManagementView.d",
+    "diagnostics" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ChoreManagementView.dia",
+    "index-unit-output-path" : "/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ChoreManagementView.o",
+    "llvm-bc" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ChoreManagementView.bc",
+    "object" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ChoreManagementView.o",
+    "swift-dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ChoreManagementView.swiftdeps",
+    "swiftmodule" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ChoreManagementView~partial.swiftmodule"
+  },
+  "/Users/keetane/Documents/apps/allowance/Allowance/Views/ContentView.swift" : {
+    "const-values" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ContentView.d",
+    "diagnostics" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ContentView.dia",
+    "index-unit-output-path" : "/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ContentView.o",
+    "llvm-bc" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ContentView.bc",
+    "object" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ContentView.o",
+    "swift-dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ContentView.swiftdeps",
+    "swiftmodule" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/ContentView~partial.swiftmodule"
+  },
+  "/Users/keetane/Documents/apps/allowance/Allowance/Views/DashboardView.swift" : {
+    "const-values" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/DashboardView.swiftconstvalues",
+    "dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/DashboardView.d",
+    "diagnostics" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/DashboardView.dia",
+    "index-unit-output-path" : "/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/DashboardView.o",
+    "llvm-bc" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/DashboardView.bc",
+    "object" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/DashboardView.o",
+    "swift-dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/DashboardView.swiftdeps",
+    "swiftmodule" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/DashboardView~partial.swiftmodule"
+  },
+  "/Users/keetane/Documents/apps/allowance/Allowance/Views/HistoryView.swift" : {
+    "const-values" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/HistoryView.swiftconstvalues",
+    "dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/HistoryView.d",
+    "diagnostics" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/HistoryView.dia",
+    "index-unit-output-path" : "/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/HistoryView.o",
+    "llvm-bc" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/HistoryView.bc",
+    "object" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/HistoryView.o",
+    "swift-dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/HistoryView.swiftdeps",
+    "swiftmodule" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/HistoryView~partial.swiftmodule"
+  },
+  "/Users/keetane/Documents/apps/allowance/Allowance/Views/SpendView.swift" : {
+    "const-values" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/SpendView.swiftconstvalues",
+    "dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/SpendView.d",
+    "diagnostics" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/SpendView.dia",
+    "index-unit-output-path" : "/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/SpendView.o",
+    "llvm-bc" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/SpendView.bc",
+    "object" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/SpendView.o",
+    "swift-dependencies" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/SpendView.swiftdeps",
+    "swiftmodule" : "/Users/keetane/Documents/apps/allowance/.DerivedData/Build/Intermediates.noindex/Allowance.build/Debug-iphonesimulator/Allowance.build/Objects-normal/x86_64/SpendView~partial.swiftmodule"
+  }
+}
