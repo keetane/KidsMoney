@@ -2,6 +2,8 @@ import SwiftUI
 
 struct DashboardView: View {
     @EnvironmentObject private var store: AllowanceStore
+    @State private var isShowingBonusSheet = false
+    @State private var bonusAmountText = ""
 
     var body: some View {
         VStack(spacing: 16) {
@@ -16,6 +18,20 @@ struct DashboardView: View {
                 .padding()
                 .frame(maxWidth: .infinity)
                 .background(.green.opacity(0.12), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                .contentShape(Rectangle())
+                .gesture(
+                    DragGesture(minimumDistance: 30)
+                        .onEnded { value in
+                            let horizontal = value.translation.width
+                            let vertical = value.translation.height
+                            guard abs(horizontal) > abs(vertical) else { return }
+                            if horizontal < 0 {
+                                store.selectNextChild()
+                            } else {
+                                store.selectPreviousChild()
+                            }
+                        }
+                )
 
                 VStack(alignment: .leading, spacing: 8) {
                     Text("お手伝いでためる")
@@ -26,6 +42,20 @@ struct DashboardView: View {
                     } else {
                         ScrollView {
                             VStack(spacing: 8) {
+                                Button {
+                                    isShowingBonusSheet = true
+                                } label: {
+                                    HStack {
+                                        Text("🎁 ボーナス")
+                                        Spacer()
+                                        Text("金額を入力")
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    .padding(.vertical, 6)
+                                }
+                                .buttonStyle(.borderedProminent)
+
                                 ForEach(store.activeChores) { chore in
                                     Button {
                                         store.completeChore(chore)
@@ -51,19 +81,31 @@ struct DashboardView: View {
             }
         }
         .padding()
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 30)
-                .onEnded { value in
-                    let horizontal = value.translation.width
-                    let vertical = value.translation.height
-                    guard abs(horizontal) > abs(vertical) else { return }
-                    if horizontal < 0 {
-                        store.selectNextChild()
-                    } else {
-                        store.selectPreviousChild()
+        .sheet(isPresented: $isShowingBonusSheet) {
+            NavigationStack {
+                Form {
+                    TextField("ボーナス金額", text: $bonusAmountText)
+                        .keyboardType(.numberPad)
+                }
+                .navigationTitle("ボーナス")
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("キャンセル") {
+                            isShowingBonusSheet = false
+                            bonusAmountText = ""
+                        }
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("追加") {
+                            let amount = parsedAmount(from: bonusAmountText)
+                            store.addBonus(amount: amount)
+                            isShowingBonusSheet = false
+                            bonusAmountText = ""
+                        }
                     }
                 }
-        )
+            }
+        }
     }
 
     private func choreEmoji(for title: String) -> String {
@@ -86,5 +128,15 @@ struct DashboardView: View {
         default:
             return "✨"
         }
+    }
+
+    private func parsedAmount(from text: String) -> Int {
+        var value = 0
+        for char in text {
+            if let digit = char.wholeNumberValue {
+                value = value * 10 + digit
+            }
+        }
+        return value
     }
 }

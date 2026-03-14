@@ -124,6 +124,15 @@ final class AllowanceStore: ObservableObject {
         save()
     }
 
+    func addBonus(amount: Int, title: String = "ボーナス") {
+        guard amount > 0 else { return }
+        guard let index = selectedChildIndex else { return }
+
+        children[index].balance += amount
+        children[index].history.append(AllowanceEvent(type: .earn, title: title, amount: amount))
+        save()
+    }
+
     @discardableResult
     func spend(title: String, amount: Int) -> Bool {
         guard amount > 0 else { return false }

@@ -11,55 +11,63 @@ struct SpendView: View {
     @State private var message = ""
 
     var body: some View {
-        Form {
+        VStack(spacing: 16) {
             if let child = store.selectedChild {
-                Section("現在残高") {
+                VStack(spacing: 8) {
+                    Text("現在のおこづかい")
+                        .font(.headline)
                     Text("\(child.balance)円")
-                        .font(.title2.bold())
+                        .font(.system(size: 42, weight: .bold))
+                        .foregroundStyle(.green)
                 }
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(.green.opacity(0.12), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
             }
 
-            Section("おこづかいをつかう") {
-                TextField("何に使った？", text: $title)
-                TextField("金額", text: $amountText)
-                    .keyboardType(.numberPad)
+            Form {
+                Section("おこづかいをつかう") {
+                    TextField("何に使った？", text: $title)
+                    TextField("金額", text: $amountText)
+                        .keyboardType(.numberPad)
 
-                Button("記録") {
-                    dismissKeyboard()
-                    let amount = parsedAmount(from: amountText)
-                    let success = store.spend(title: title, amount: amount)
-                    if success {
-                        message = "記録しました"
-                        title = ""
-                        amountText = ""
-                    } else {
-                        message = "入力内容か残高を確認してください"
+                    Button("記録") {
+                        dismissKeyboard()
+                        let amount = parsedAmount(from: amountText)
+                        let success = store.spend(title: title, amount: amount)
+                        if success {
+                            message = "記録しました"
+                            title = ""
+                            amountText = ""
+                        } else {
+                            message = "入力内容か残高を確認してください"
+                        }
+                    }
+                }
+
+                if !message.isEmpty {
+                    Section {
+                        Text(message)
+                            .foregroundStyle(message == "記録しました" ? .green : .red)
                     }
                 }
             }
-
-            if !message.isEmpty {
-                Section {
-                    Text(message)
-                        .foregroundStyle(message == "記録しました" ? .green : .red)
-                }
-            }
+            .simultaneousGesture(
+                DragGesture(minimumDistance: 30)
+                    .onEnded { value in
+                        let horizontal = value.translation.width
+                        let vertical = value.translation.height
+                        guard abs(horizontal) > abs(vertical) else { return }
+                        if horizontal < 0 {
+                            store.selectNextChild()
+                        } else {
+                            store.selectPreviousChild()
+                        }
+                    }
+            )
         }
         .scrollDismissesKeyboard(.interactively)
-        .contentShape(Rectangle())
-        .gesture(
-            DragGesture(minimumDistance: 30)
-                .onEnded { value in
-                    let horizontal = value.translation.width
-                    let vertical = value.translation.height
-                    guard abs(horizontal) > abs(vertical) else { return }
-                    if horizontal < 0 {
-                        store.selectNextChild()
-                    } else {
-                        store.selectPreviousChild()
-                    }
-                }
-        )
+        .padding()
         .onDisappear {
             dismissKeyboard()
         }
