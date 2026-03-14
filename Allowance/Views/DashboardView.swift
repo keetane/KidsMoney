@@ -2,16 +2,30 @@ import SwiftUI
 
 struct DashboardView: View {
     @EnvironmentObject private var store: AllowanceStore
+    @AppStorage("dashboardChoreLayoutIsCompact") private var isCompactChoreUI = false
     @State private var isShowingBonusSheet = false
     @State private var bonusAmountText = ""
 
     var body: some View {
         VStack(spacing: 16) {
             if let child = store.selectedChild {
-                Text(child.name)
-                    .font(.title.bold())
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
+                HStack {
+                    Text(child.name)
+                        .font(.title.bold())
+                    Spacer()
+                    Button {
+                        isCompactChoreUI.toggle()
+                    } label: {
+                        Text("UI")
+                            .font(.caption.bold())
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(.thinMaterial, in: Capsule())
+                    }
+                    .buttonStyle(.plain)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal)
 
                 VStack(spacing: 8) {
                     Text("現在のおこづかい")
@@ -32,35 +46,43 @@ struct DashboardView: View {
                             .foregroundStyle(.secondary)
                     } else {
                         ScrollView {
-                            VStack(spacing: 8) {
-                                Button {
-                                    isShowingBonusSheet = true
-                                } label: {
-                                    HStack {
-                                        Text("🎁 ボーナス")
-                                        Spacer()
-                                        Text("金額を入力")
-                                            .font(.caption)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                    .padding(.vertical, 6)
-                                }
-                                .buttonStyle(.borderedProminent)
-
-                                ForEach(store.activeChores) { chore in
-                                    Button {
-                                        store.completeChore(chore)
-                                    } label: {
-                                        HStack {
-                                            Text(chore.title)
-                                            Spacer()
-                                            Text("+\(chore.reward)円")
-                                                .bold()
-                                                .foregroundStyle(.green)
+                            VStack(spacing: 12) {
+                                if isCompactChoreUI {
+                                    compactBonusButton
+                                    LazyVGrid(columns: compactColumns, spacing: 8) {
+                                        ForEach(store.activeChores) { chore in
+                                            Button {
+                                                store.completeChore(chore)
+                                            } label: {
+                                                VStack(spacing: 6) {
+                                                    Text(choreIcon(for: chore.title))
+                                                        .font(.title2)
+                                                    Text("+\(chore.reward)円")
+                                                        .font(.caption.bold())
+                                                        .foregroundStyle(.green)
+                                                }
+                                                .frame(maxWidth: .infinity, minHeight: 64)
+                                            }
+                                            .buttonStyle(.bordered)
                                         }
-                                        .padding(.vertical, 6)
                                     }
-                                    .buttonStyle(.bordered)
+                                } else {
+                                    bonusButton
+                                    ForEach(store.activeChores) { chore in
+                                        Button {
+                                            store.completeChore(chore)
+                                        } label: {
+                                            HStack {
+                                                Text(chore.title)
+                                                Spacer()
+                                                Text("+\(chore.reward)円")
+                                                    .bold()
+                                                    .foregroundStyle(.green)
+                                            }
+                                            .padding(.vertical, 6)
+                                        }
+                                        .buttonStyle(.bordered)
+                                    }
                                 }
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -110,6 +132,53 @@ struct DashboardView: View {
                 }
             }
         }
+    }
+
+    private var bonusButton: some View {
+        Button {
+            isShowingBonusSheet = true
+        } label: {
+            HStack {
+                Text("🎁 ボーナス")
+                Spacer()
+                Text("金額を入力")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .padding(.vertical, 6)
+        }
+        .buttonStyle(.borderedProminent)
+    }
+
+    private var compactBonusButton: some View {
+        Button {
+            isShowingBonusSheet = true
+        } label: {
+            VStack(spacing: 6) {
+                Text("🎁")
+                    .font(.title2)
+                Text("ボーナス")
+                    .font(.caption.bold())
+                Text("入力")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
+            .frame(maxWidth: .infinity, minHeight: 64)
+        }
+        .buttonStyle(.borderedProminent)
+    }
+
+    private var compactColumns: [GridItem] {
+        Array(repeating: GridItem(.flexible(), spacing: 8), count: 3)
+    }
+
+    private func choreIcon(for title: String) -> String {
+        let trimmed = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let parts = trimmed.split(separator: " ", maxSplits: 1, omittingEmptySubsequences: true)
+        if let first = parts.first, first.count <= 2 {
+            return String(first)
+        }
+        return "🔹"
     }
 
     private func parsedAmount(from text: String) -> Int {
