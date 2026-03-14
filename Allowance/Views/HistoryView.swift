@@ -100,106 +100,127 @@ struct HistoryView: View {
     }
 
     var body: some View {
-        List {
-            Section("カレンダー") {
-                monthHeader
-                weekHeader
-                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 10) {
-                    ForEach(Array(calendarDays.enumerated()), id: \.offset) { entry in
-                        let date = entry.element
-                        if let date {
-                            dayCell(for: date)
-                        } else {
-                            Color.clear
-                                .frame(height: 32)
-                        }
-                    }
-                }
-            }
+        VStack(spacing: 16) {
+            if let child = store.selectedChild {
+                Text(child.name)
+                    .font(.title.bold())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
 
-            Section("\(monthFormatter.string(from: displayedMonth)) の合計") {
-                HStack {
-                    Text("ためた金額")
-                    Spacer()
-                    Text("+\(earnedTotal)円")
+                VStack(spacing: 8) {
+                    Text("現在のおこづかい")
+                        .font(.headline)
+                    Text("\(child.balance)円")
+                        .font(.system(size: 42, weight: .bold))
                         .foregroundStyle(.green)
                 }
-                HStack {
-                    Text("つかった金額")
-                    Spacer()
-                    Text("-\(spentTotal)円")
-                        .foregroundStyle(.red)
-                }
-                HStack {
-                    Text("差し引き")
-                    Spacer()
-                    Text("\(netTotal >= 0 ? "+" : "")\(netTotal)円")
-                        .bold()
-                        .foregroundStyle(netTotal >= 0 ? .green : .red)
-                }
-            }
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(.green.opacity(0.12), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
 
-            Section("\(dayFormatter.string(from: selectedDate)) の履歴") {
-                if selectedDayEvents.isEmpty {
-                    Text("この日の履歴はありません")
-                        .foregroundStyle(.secondary)
-                } else {
-                    ForEach(selectedDayEvents) { event in
-                        HStack {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(event.title)
-                                Text(formatter.string(from: event.date))
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-                            Spacer()
-                            Text(amountLabel(for: event))
-                                .bold()
-                                .foregroundStyle(event.type == .earn ? .green : .red)
-                        }
-                        .padding(.vertical, 4)
-                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                            Button(role: .destructive) {
-                                if !store.deleteEvent(event) {
-                                    message = "残高が0円未満になるため削除できません"
+                List {
+                    Section("カレンダー") {
+                        monthHeader
+                        weekHeader
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 10) {
+                            ForEach(Array(calendarDays.enumerated()), id: \.offset) { entry in
+                                let date = entry.element
+                                if let date {
+                                    dayCell(for: date)
+                                } else {
+                                    Color.clear
+                                        .frame(height: 32)
                                 }
-                            } label: {
-                                Text("削除")
                             }
                         }
-                        .swipeActions(edge: .leading, allowsFullSwipe: false) {
-                            Button {
-                                editingEvent = event
-                            } label: {
-                                Text("編集")
+                    }
+
+                    Section("\(monthFormatter.string(from: displayedMonth)) の合計") {
+                        HStack {
+                            Text("ためた金額")
+                            Spacer()
+                            Text("+\(earnedTotal)円")
+                                .foregroundStyle(.green)
+                        }
+                        HStack {
+                            Text("つかった金額")
+                            Spacer()
+                            Text("-\(spentTotal)円")
+                                .foregroundStyle(.red)
+                        }
+                        HStack {
+                            Text("差し引き")
+                            Spacer()
+                            Text("\(netTotal >= 0 ? "+" : "")\(netTotal)円")
+                                .bold()
+                                .foregroundStyle(netTotal >= 0 ? .green : .red)
+                        }
+                    }
+
+                    Section("\(dayFormatter.string(from: selectedDate)) の履歴") {
+                        if selectedDayEvents.isEmpty {
+                            Text("この日の履歴はありません")
+                                .foregroundStyle(.secondary)
+                        } else {
+                            ForEach(selectedDayEvents) { event in
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(event.title)
+                                        Text(formatter.string(from: event.date))
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    Spacer()
+                                    Text(amountLabel(for: event))
+                                        .bold()
+                                        .foregroundStyle(event.type == .earn ? .green : .red)
+                                }
+                                .padding(.vertical, 4)
+                                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                    Button(role: .destructive) {
+                                        if !store.deleteEvent(event) {
+                                            message = "残高が0円未満になるため削除できません"
+                                        }
+                                    } label: {
+                                        Text("削除")
+                                    }
+                                }
+                                .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                                    Button {
+                                        editingEvent = event
+                                    } label: {
+                                        Text("編集")
+                                    }
+                                    .tint(.blue)
+                                }
                             }
-                            .tint(.blue)
+                        }
+                    }
+
+                    if !message.isEmpty {
+                        Section {
+                            Text(message)
+                                .foregroundStyle(.red)
                         }
                     }
                 }
-            }
-
-            if !message.isEmpty {
-                Section {
-                    Text(message)
-                        .foregroundStyle(.red)
-                }
+                .listStyle(.insetGrouped)
+                .simultaneousGesture(
+                    DragGesture(minimumDistance: 30)
+                        .onEnded { value in
+                            let horizontal = value.translation.width
+                            let vertical = value.translation.height
+                            guard abs(horizontal) > abs(vertical) else { return }
+                            if horizontal < 0 {
+                                store.selectNextChild()
+                            } else {
+                                store.selectPreviousChild()
+                            }
+                        }
+                )
             }
         }
-        .contentShape(Rectangle())
-        .gesture(
-            DragGesture(minimumDistance: 30)
-                .onEnded { value in
-                    let horizontal = value.translation.width
-                    let vertical = value.translation.height
-                    guard abs(horizontal) > abs(vertical) else { return }
-                    if horizontal < 0 {
-                        store.selectNextChild()
-                    } else {
-                        store.selectPreviousChild()
-                    }
-                }
-        )
+        .padding()
         .sheet(item: $editingEvent) { event in
             EditEventSheetView(event: event) { updated, errorMessage in
                 if let errorMessage {

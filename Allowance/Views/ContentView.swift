@@ -38,7 +38,7 @@ struct MainTabsView: View {
         .onChange(of: selectedTab) { _ in
             dismissKeyboard()
         }
-        .navigationTitle(store.selectedChild?.name ?? "おこづかい")
+        .navigationTitle("")
     }
 
     private func dismissKeyboard() {

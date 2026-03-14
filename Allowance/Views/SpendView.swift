@@ -13,6 +13,11 @@ struct SpendView: View {
     var body: some View {
         VStack(spacing: 16) {
             if let child = store.selectedChild {
+                Text(child.name)
+                    .font(.title.bold())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+
                 VStack(spacing: 8) {
                     Text("現在のおこづかい")
                         .font(.headline)

@@ -8,6 +8,11 @@ struct DashboardView: View {
     var body: some View {
         VStack(spacing: 16) {
             if let child = store.selectedChild {
+                Text(child.name)
+                    .font(.title.bold())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+
                 VStack(spacing: 8) {
                     Text("現在のおこづかい")
                         .font(.headline)
@@ -18,20 +23,6 @@ struct DashboardView: View {
                 .padding()
                 .frame(maxWidth: .infinity)
                 .background(.green.opacity(0.12), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-                .contentShape(Rectangle())
-                .gesture(
-                    DragGesture(minimumDistance: 30)
-                        .onEnded { value in
-                            let horizontal = value.translation.width
-                            let vertical = value.translation.height
-                            guard abs(horizontal) > abs(vertical) else { return }
-                            if horizontal < 0 {
-                                store.selectNextChild()
-                            } else {
-                                store.selectPreviousChild()
-                            }
-                        }
-                )
 
                 VStack(alignment: .leading, spacing: 8) {
                     Text("お手伝いでためる")
@@ -61,7 +52,7 @@ struct DashboardView: View {
                                         store.completeChore(chore)
                                     } label: {
                                         HStack {
-                                            Text("\(choreEmoji(for: chore.title)) \(chore.title)")
+                                            Text("\(emojiPrefix(for: chore.title))\(chore.title)")
                                             Spacer()
                                             Text("+\(chore.reward)円")
                                                 .bold()
@@ -75,6 +66,19 @@ struct DashboardView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.vertical, 4)
                         }
+                        .simultaneousGesture(
+                            DragGesture(minimumDistance: 30)
+                                .onEnded { value in
+                                    let horizontal = value.translation.width
+                                    let vertical = value.translation.height
+                                    guard abs(horizontal) > abs(vertical) else { return }
+                                    if horizontal < 0 {
+                                        store.selectNextChild()
+                                    } else {
+                                        store.selectPreviousChild()
+                                    }
+                                }
+                        )
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -108,28 +112,6 @@ struct DashboardView: View {
         }
     }
 
-    private func choreEmoji(for title: String) -> String {
-        let key = title.replacingOccurrences(of: " ", with: "")
-        switch key {
-        case "ゴミ出し":
-            return "🗑️"
-        case "風呂掃除", "お風呂そうじ", "お風呂掃除":
-            return "🛁"
-        case "洗濯物畳み", "洗濯物たたみ":
-            return "🧺"
-        case "おつかい":
-            return "🛒"
-        case "お皿洗い":
-            return "🍽️"
-        case "掃除機1部屋", "掃除機":
-            return "🧹"
-        case "ご飯作り", "料理":
-            return "🍳"
-        default:
-            return "✨"
-        }
-    }
-
     private func parsedAmount(from text: String) -> Int {
         var value = 0
         for char in text {
@@ -138,5 +120,27 @@ struct DashboardView: View {
             }
         }
         return value
+    }
+
+    private func emojiPrefix(for title: String) -> String {
+        let key = title.replacingOccurrences(of: " ", with: "")
+        switch key {
+        case "ゴミ出し":
+            return "🗑️ "
+        case "風呂掃除", "お風呂そうじ", "お風呂掃除":
+            return "🛁 "
+        case "洗濯物畳み", "洗濯物たたみ":
+            return "🧺 "
+        case "おつかい":
+            return "🛒 "
+        case "お皿洗い":
+            return "🍽️ "
+        case "掃除機1部屋", "掃除機":
+            return "🧹 "
+        case "ご飯作り", "料理":
+            return "🍳 "
+        default:
+            return ""
+        }
     }
 }
