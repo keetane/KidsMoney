@@ -48,8 +48,8 @@ struct DashboardView: View {
                         ScrollView {
                             VStack(spacing: 12) {
                                 if isCompactChoreUI {
-                                    compactBonusButton
                                     LazyVGrid(columns: compactColumns, spacing: 8) {
+                                        compactBonusButton
                                         ForEach(store.activeChores) { chore in
                                             Button {
                                                 store.completeChore(chore)
@@ -61,7 +61,7 @@ struct DashboardView: View {
                                                         .font(.caption.bold())
                                                         .foregroundStyle(.green)
                                                 }
-                                                .frame(maxWidth: .infinity, minHeight: 64)
+                                                .frame(maxWidth: .infinity, minHeight: 64, maxHeight: 64)
                                             }
                                             .buttonStyle(.bordered)
                                         }
@@ -154,7 +154,7 @@ struct DashboardView: View {
         Button {
             isShowingBonusSheet = true
         } label: {
-            VStack(spacing: 6) {
+            VStack(spacing: 4) {
                 Text("🎁")
                     .font(.title2)
                 Text("ボーナス")
@@ -163,7 +163,7 @@ struct DashboardView: View {
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             }
-            .frame(maxWidth: .infinity, minHeight: 64)
+            .frame(maxWidth: .infinity, minHeight: 64, maxHeight: 64)
         }
         .buttonStyle(.borderedProminent)
     }
