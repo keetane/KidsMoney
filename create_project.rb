@@ -1,11 +1,11 @@
 require 'xcodeproj'
 
-project_path = 'Allowance.xcodeproj'
+project_path = 'KidsMoney.xcodeproj'
 project = Xcodeproj::Project.new(project_path)
 
-target = project.new_target(:application, 'Allowance', :ios, '16.0')
+target = project.new_target(:application, 'KidsMoney', :ios, '16.0')
 
-group = project.main_group.new_group('Allowance', 'Allowance')
+group = project.main_group.new_group('KidsMoney', 'Allowance')
 models = group.new_group('Models', 'Models')
 viewmodels = group.new_group('ViewModels', 'ViewModels')
 views = group.new_group('Views', 'Views')
@@ -18,6 +18,7 @@ resources = group.new_group('Resources', 'Resources')
   'Allowance/Views/ContentView.swift',
   'Allowance/Views/ChildSelectionView.swift',
   'Allowance/Views/DashboardView.swift',
+  'Allowance/Views/SettingsView.swift',
   'Allowance/Views/ChoreManagementView.swift',
   'Allowance/Views/SpendView.swift',
   'Allowance/Views/HistoryView.swift'

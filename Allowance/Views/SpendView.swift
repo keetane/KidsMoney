@@ -46,6 +46,20 @@ struct SpendView: View {
             }
         }
         .scrollDismissesKeyboard(.interactively)
+        .contentShape(Rectangle())
+        .gesture(
+            DragGesture(minimumDistance: 30)
+                .onEnded { value in
+                    let horizontal = value.translation.width
+                    let vertical = value.translation.height
+                    guard abs(horizontal) > abs(vertical) else { return }
+                    if horizontal < 0 {
+                        store.selectNextChild()
+                    } else {
+                        store.selectPreviousChild()
+                    }
+                }
+        )
         .onDisappear {
             dismissKeyboard()
         }

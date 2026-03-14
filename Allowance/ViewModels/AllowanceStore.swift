@@ -28,10 +28,36 @@ final class AllowanceStore: ObservableObject {
 
     func selectChild(_ child: ChildProfile) {
         selectedChildID = child.id
+        save()
     }
 
     func clearSelection() {
         selectedChildID = nil
+        save()
+    }
+
+    func selectNextChild() {
+        guard !children.isEmpty else { return }
+        if let currentID = selectedChildID,
+           let index = children.firstIndex(where: { $0.id == currentID }) {
+            let nextIndex = (index + 1) % children.count
+            selectedChildID = children[nextIndex].id
+        } else {
+            selectedChildID = children[0].id
+        }
+        save()
+    }
+
+    func selectPreviousChild() {
+        guard !children.isEmpty else { return }
+        if let currentID = selectedChildID,
+           let index = children.firstIndex(where: { $0.id == currentID }) {
+            let prevIndex = (index - 1 + children.count) % children.count
+            selectedChildID = children[prevIndex].id
+        } else {
+            selectedChildID = children[0].id
+        }
+        save()
     }
 
     func addChild(name: String, initialBalance: Int) {
@@ -51,6 +77,11 @@ final class AllowanceStore: ObservableObject {
         if let selectedChildID, idsToDelete.contains(selectedChildID) {
             self.selectedChildID = nil
         }
+        save()
+    }
+
+    func moveChildren(from offsets: IndexSet, to offset: Int) {
+        children.move(fromOffsets: offsets, toOffset: offset)
         save()
     }
 
@@ -79,6 +110,11 @@ final class AllowanceStore: ObservableObject {
         save()
     }
 
+    func moveChores(from offsets: IndexSet, to offset: Int) {
+        choreTemplates.move(fromOffsets: offsets, toOffset: offset)
+        save()
+    }
+
     func completeChore(_ chore: ChoreTemplate) {
         guard chore.isActive else { return }
         guard let index = selectedChildIndex else { return }
@@ -98,6 +134,43 @@ final class AllowanceStore: ObservableObject {
 
         children[index].balance -= amount
         children[index].history.append(AllowanceEvent(type: .spend, title: trimmed, amount: amount))
+        save()
+        return true
+    }
+
+    @discardableResult
+    func updateEvent(_ event: AllowanceEvent, title: String, amount: Int, date: Date, type: AllowanceEventType) -> Bool {
+        guard amount > 0 else { return false }
+        let trimmed = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return false }
+        guard let index = selectedChildIndex else { return false }
+        guard let eventIndex = children[index].history.firstIndex(where: { $0.id == event.id }) else { return false }
+
+        let oldDelta = event.type == .earn ? event.amount : -event.amount
+        let newDelta = type == .earn ? amount : -amount
+        let nextBalance = children[index].balance + (newDelta - oldDelta)
+        guard nextBalance >= 0 else { return false }
+
+        children[index].balance = nextBalance
+        children[index].history[eventIndex].title = trimmed
+        children[index].history[eventIndex].amount = amount
+        children[index].history[eventIndex].date = date
+        children[index].history[eventIndex].type = type
+        save()
+        return true
+    }
+
+    @discardableResult
+    func deleteEvent(_ event: AllowanceEvent) -> Bool {
+        guard let index = selectedChildIndex else { return false }
+        guard let eventIndex = children[index].history.firstIndex(where: { $0.id == event.id }) else { return false }
+
+        let delta = event.type == .earn ? -event.amount : event.amount
+        let nextBalance = children[index].balance + delta
+        guard nextBalance >= 0 else { return false }
+
+        children[index].balance = nextBalance
+        children[index].history.remove(at: eventIndex)
         save()
         return true
     }
@@ -123,12 +196,14 @@ final class AllowanceStore: ObservableObject {
         guard let storageURL else {
             children = Self.defaultChildren
             choreTemplates = Self.defaultChores
+            selectedChildID = children.first?.id
             return
         }
 
         guard fileManager.fileExists(atPath: storageURL.path) else {
             children = Self.defaultChildren
             choreTemplates = Self.defaultChores
+            selectedChildID = children.first?.id
             save()
             return
         }
@@ -143,18 +218,18 @@ final class AllowanceStore: ObservableObject {
                 let migratedChores = Self.migrateSharedChores(from: children)
                 choreTemplates = migratedChores.isEmpty ? Self.defaultChores : migratedChores
             }
+            selectedChildID = children.first?.id
         } catch {
             children = Self.defaultChildren
             choreTemplates = Self.defaultChores
+            selectedChildID = children.first?.id
         }
-
-        selectedChildID = nil
     }
 
     private func save() {
         guard let storageURL else { return }
         do {
-            let payload = StoredData(children: children, chores: choreTemplates)
+            let payload = StoredData(children: children, chores: choreTemplates, lastSelectedChildID: selectedChildID)
             let data = try JSONEncoder().encode(payload)
             try data.write(to: storageURL, options: .atomic)
         } catch {

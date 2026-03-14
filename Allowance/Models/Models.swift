@@ -55,20 +55,24 @@ struct AllowanceEvent: Identifiable, Codable, Hashable {
 struct StoredData: Codable {
     var children: [ChildProfile]
     var chores: [ChoreTemplate]?
+    var lastSelectedChildID: UUID?
 
-    init(children: [ChildProfile], chores: [ChoreTemplate]?) {
+    init(children: [ChildProfile], chores: [ChoreTemplate]?, lastSelectedChildID: UUID?) {
         self.children = children
         self.chores = chores
+        self.lastSelectedChildID = lastSelectedChildID
     }
 
     private enum CodingKeys: String, CodingKey {
         case children
         case chores
+        case lastSelectedChildID
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         children = try container.decodeIfPresent([ChildProfile].self, forKey: .children) ?? []
         chores = try container.decodeIfPresent([ChoreTemplate].self, forKey: .chores)
+        lastSelectedChildID = try container.decodeIfPresent(UUID.self, forKey: .lastSelectedChildID)
     }
 }

@@ -4,6 +4,8 @@ struct HistoryView: View {
     @EnvironmentObject private var store: AllowanceStore
     @State private var selectedDate = Date()
     @State private var displayedMonth = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Date())) ?? Date()
+    @State private var editingEvent: AllowanceEvent?
+    @State private var message = ""
 
     private let formatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -156,7 +158,57 @@ struct HistoryView: View {
                                 .foregroundStyle(event.type == .earn ? .green : .red)
                         }
                         .padding(.vertical, 4)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button(role: .destructive) {
+                                if !store.deleteEvent(event) {
+                                    message = "残高が0円未満になるため削除できません"
+                                }
+                            } label: {
+                                Text("削除")
+                            }
+                        }
+                        .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                            Button {
+                                editingEvent = event
+                            } label: {
+                                Text("編集")
+                            }
+                            .tint(.blue)
+                        }
                     }
+                }
+            }
+
+            if !message.isEmpty {
+                Section {
+                    Text(message)
+                        .foregroundStyle(.red)
+                }
+            }
+        }
+        .contentShape(Rectangle())
+        .gesture(
+            DragGesture(minimumDistance: 30)
+                .onEnded { value in
+                    let horizontal = value.translation.width
+                    let vertical = value.translation.height
+                    guard abs(horizontal) > abs(vertical) else { return }
+                    if horizontal < 0 {
+                        store.selectNextChild()
+                    } else {
+                        store.selectPreviousChild()
+                    }
+                }
+        )
+        .sheet(item: $editingEvent) { event in
+            EditEventSheetView(event: event) { updated, errorMessage in
+                if let errorMessage {
+                    message = errorMessage
+                } else {
+                    message = ""
+                }
+                if updated {
+                    editingEvent = nil
                 }
             }
         }
@@ -238,5 +290,73 @@ struct HistoryView: View {
         case .spend:
             return "-\(event.amount)円"
         }
+    }
+}
+
+struct EditEventSheetView: View {
+    @EnvironmentObject private var store: AllowanceStore
+    @Environment(\.dismiss) private var dismiss
+
+    let event: AllowanceEvent
+    let onComplete: (Bool, String?) -> Void
+
+    @State private var title: String
+    @State private var amountText: String
+    @State private var date: Date
+    @State private var type: AllowanceEventType
+
+    init(event: AllowanceEvent, onComplete: @escaping (Bool, String?) -> Void) {
+        self.event = event
+        self.onComplete = onComplete
+        _title = State(initialValue: event.title)
+        _amountText = State(initialValue: String(event.amount))
+        _date = State(initialValue: event.date)
+        _type = State(initialValue: event.type)
+    }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                TextField("内容", text: $title)
+                TextField("金額", text: $amountText)
+                    .keyboardType(.numberPad)
+                Picker("種別", selection: $type) {
+                    Text("ためた").tag(AllowanceEventType.earn)
+                    Text("つかった").tag(AllowanceEventType.spend)
+                }
+                .pickerStyle(.segmented)
+                DatePicker("日時", selection: $date)
+            }
+            .navigationTitle("履歴を修正")
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("キャンセル") {
+                        dismiss()
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("保存") {
+                        let amount = parsedAmount(from: amountText)
+                        let success = store.updateEvent(event, title: title, amount: amount, date: date, type: type)
+                        if success {
+                            onComplete(true, nil)
+                            dismiss()
+                        } else {
+                            onComplete(false, "入力内容か残高を確認してください")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private func parsedAmount(from text: String) -> Int {
+        var value = 0
+        for char in text {
+            if let digit = char.wholeNumberValue {
+                value = value * 10 + digit
+            }
+        }
+        return value
     }
 }
