@@ -52,7 +52,7 @@ struct DashboardView: View {
                                         store.completeChore(chore)
                                     } label: {
                                         HStack {
-                                            Text("\(emojiPrefix(for: chore.title))\(chore.title)")
+                                            Text(chore.title)
                                             Spacer()
                                             Text("+\(chore.reward)円")
                                                 .bold()
@@ -120,27 +120,5 @@ struct DashboardView: View {
             }
         }
         return value
-    }
-
-    private func emojiPrefix(for title: String) -> String {
-        let key = title.replacingOccurrences(of: " ", with: "")
-        switch key {
-        case "ゴミ出し":
-            return "🗑️ "
-        case "風呂掃除", "お風呂そうじ", "お風呂掃除":
-            return "🛁 "
-        case "洗濯物畳み", "洗濯物たたみ":
-            return "🧺 "
-        case "おつかい":
-            return "🛒 "
-        case "お皿洗い":
-            return "🍽️ "
-        case "掃除機1部屋", "掃除機":
-            return "🧹 "
-        case "ご飯作り", "料理":
-            return "🍳 "
-        default:
-            return ""
-        }
     }
 }

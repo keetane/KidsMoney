@@ -23,7 +23,9 @@ final class AllowanceStore: ObservableObject {
     }
 
     var activeChores: [ChoreTemplate] {
-        choreTemplates.filter(\.isActive)
+        guard let selectedChild else { return choreTemplates.filter(\.isActive) }
+        let hidden = Set(selectedChild.hiddenChoreIDs)
+        return choreTemplates.filter { $0.isActive && !hidden.contains($0.id) }
     }
 
     func selectChild(_ child: ChildProfile) {
@@ -66,6 +68,18 @@ final class AllowanceStore: ObservableObject {
         guard initialBalance >= 0 else { return }
 
         children.append(ChildProfile(name: trimmed, balance: initialBalance))
+        save()
+    }
+
+    func updateChild(_ child: ChildProfile, name: String, balance: Int, hiddenChoreIDs: [UUID]) {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        guard balance >= 0 else { return }
+        guard let index = children.firstIndex(where: { $0.id == child.id }) else { return }
+
+        children[index].name = trimmed
+        children[index].balance = balance
+        children[index].hiddenChoreIDs = hiddenChoreIDs
         save()
     }
 
@@ -227,6 +241,7 @@ final class AllowanceStore: ObservableObject {
                 let migratedChores = Self.migrateSharedChores(from: children)
                 choreTemplates = migratedChores.isEmpty ? Self.defaultChores : migratedChores
             }
+            appendMissingDefaultChores()
             selectedChildID = children.first?.id
         } catch {
             children = Self.defaultChildren
@@ -255,13 +270,16 @@ final class AllowanceStore: ObservableObject {
 
     private static var defaultChores: [ChoreTemplate] {
         [
-            ChoreTemplate(title: "ゴミ出し", reward: 10),
-            ChoreTemplate(title: "風呂掃除", reward: 10),
-            ChoreTemplate(title: "洗濯物畳み", reward: 10),
-            ChoreTemplate(title: "おつかい", reward: 10),
-            ChoreTemplate(title: "お皿洗い", reward: 10),
-            ChoreTemplate(title: "掃除機 1部屋", reward: 10),
-            ChoreTemplate(title: "ご飯作り", reward: 10)
+            ChoreTemplate(title: "🗑️ ゴミ出し", reward: 10),
+            ChoreTemplate(title: "🛁 風呂掃除", reward: 10),
+            ChoreTemplate(title: "🧺 洗濯物畳み", reward: 10),
+            ChoreTemplate(title: "🛒 おつかい", reward: 10),
+            ChoreTemplate(title: "🍽️ お皿洗い", reward: 10),
+            ChoreTemplate(title: "🧹 掃除機 1部屋", reward: 10),
+            ChoreTemplate(title: "🍳 ご飯作り", reward: 10),
+            ChoreTemplate(title: "🌱 水やり", reward: 10),
+            ChoreTemplate(title: "🧽 テーブルきれいに", reward: 10),
+            ChoreTemplate(title: "👟 靴揃え", reward: 10)
         ]
     }
 
@@ -274,5 +292,32 @@ final class AllowanceStore: ObservableObject {
             migrated.append(ChoreTemplate(title: chore.title, reward: chore.reward, isActive: chore.isActive))
         }
         return migrated
+    }
+
+    private func appendMissingDefaultChores() {
+        let existingTitles = Set(choreTemplates.map { Self.normalizedChoreTitle($0.title) })
+        for chore in Self.newDefaultChores where !existingTitles.contains(Self.normalizedChoreTitle(chore.title)) {
+            choreTemplates.append(chore)
+        }
+        if !choreTemplates.isEmpty {
+            save()
+        }
+    }
+
+    private static var newDefaultChores: [ChoreTemplate] {
+        [
+            ChoreTemplate(title: "🌱 水やり", reward: 10),
+            ChoreTemplate(title: "🧽 テーブルきれいに", reward: 10),
+            ChoreTemplate(title: "👟 靴揃え", reward: 10)
+        ]
+    }
+
+    private static func normalizedChoreTitle(_ title: String) -> String {
+        let trimmed = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let parts = trimmed.split(separator: " ", maxSplits: 1, omittingEmptySubsequences: true)
+        if parts.count == 2, parts[0].count <= 2 {
+            return String(parts[1])
+        }
+        return trimmed
     }
 }

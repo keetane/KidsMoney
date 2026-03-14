@@ -7,13 +7,15 @@ struct ChildProfile: Identifiable, Codable, Hashable {
     // Legacy field kept for migration from old local data.
     var chores: [ChoreTemplate]
     var history: [AllowanceEvent]
+    var hiddenChoreIDs: [UUID]
 
-    init(id: UUID = UUID(), name: String, balance: Int = 0, chores: [ChoreTemplate] = [], history: [AllowanceEvent] = []) {
+    init(id: UUID = UUID(), name: String, balance: Int = 0, chores: [ChoreTemplate] = [], history: [AllowanceEvent] = [], hiddenChoreIDs: [UUID] = []) {
         self.id = id
         self.name = name
         self.balance = balance
         self.chores = chores
         self.history = history
+        self.hiddenChoreIDs = hiddenChoreIDs
     }
 }
 

@@ -1,14 +1,22 @@
 import SwiftUI
 
+enum ChildSelectionMode {
+    case select
+    case edit
+}
+
 struct ChildSelectionView: View {
     @EnvironmentObject private var store: AllowanceStore
     @State private var isShowingAddChildSheet = false
     @State private var isShowingAddChoreSheet = false
     @State private var editingChore: ChoreTemplate?
+    @State private var editingChild: ChildProfile?
     let showsTitle: Bool
+    let mode: ChildSelectionMode
 
-    init(showsTitle: Bool = true) {
+    init(showsTitle: Bool = true, mode: ChildSelectionMode = .select) {
         self.showsTitle = showsTitle
+        self.mode = mode
     }
 
     var body: some View {
@@ -26,7 +34,12 @@ struct ChildSelectionView: View {
 
                 ForEach(store.children) { child in
                     Button {
-                        store.selectChild(child)
+                        switch mode {
+                        case .select:
+                            store.selectChild(child)
+                        case .edit:
+                            editingChild = child
+                        }
                     } label: {
                         HStack {
                             Text(child.name)
@@ -92,6 +105,9 @@ struct ChildSelectionView: View {
         }
         .sheet(item: $editingChore) { chore in
             EditChoreSheetView(chore: chore)
+        }
+        .sheet(item: $editingChild) { child in
+            ChildEditSheetView(child: child)
         }
     }
 
@@ -169,6 +185,95 @@ struct AddChoreSheetView: View {
                 }
             }
         }
+    }
+
+    private func parsedAmount(from text: String) -> Int {
+        var value = 0
+        for char in text {
+            if let digit = char.wholeNumberValue {
+                value = value * 10 + digit
+            }
+        }
+        return value
+    }
+}
+
+struct ChildEditSheetView: View {
+    @EnvironmentObject private var store: AllowanceStore
+    @Environment(\.dismiss) private var dismiss
+
+    let child: ChildProfile
+    @State private var name: String
+    @State private var balanceText: String
+    @State private var hiddenChoreIDs: Set<UUID>
+
+    init(child: ChildProfile) {
+        self.child = child
+        _name = State(initialValue: child.name)
+        _balanceText = State(initialValue: String(child.balance))
+        _hiddenChoreIDs = State(initialValue: Set(child.hiddenChoreIDs))
+    }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section("こども") {
+                    TextField("なまえ", text: $name)
+                    TextField("残高", text: $balanceText)
+                        .keyboardType(.numberPad)
+                }
+
+                Section("ホームに表示するお手伝い") {
+                    if activeChores.isEmpty {
+                        Text("表示できるお手伝いがありません。")
+                            .foregroundStyle(.secondary)
+                    } else {
+                        ForEach(activeChores) { chore in
+                            Toggle(isOn: bindingForChoreVisibility(chore)) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(chore.title)
+                                    Text("\(chore.reward)円")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .navigationTitle("こども編集")
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("キャンセル") {
+                        dismiss()
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("保存") {
+                        let balance = parsedAmount(from: balanceText)
+                        store.updateChild(child, name: name, balance: balance, hiddenChoreIDs: Array(hiddenChoreIDs))
+                        dismiss()
+                    }
+                }
+            }
+        }
+    }
+
+    private func bindingForChoreVisibility(_ chore: ChoreTemplate) -> Binding<Bool> {
+        Binding(
+            get: { !hiddenChoreIDs.contains(chore.id) },
+            set: { isVisible in
+                if isVisible {
+                    hiddenChoreIDs.remove(chore.id)
+                } else {
+                    hiddenChoreIDs.insert(chore.id)
+                }
+            }
+        )
+    }
+
+    private var activeChores: [ChoreTemplate] {
+        store.choreTemplates.filter(\.isActive)
     }
 
     private func parsedAmount(from text: String) -> Int {
